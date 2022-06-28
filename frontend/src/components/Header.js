@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import {
   AppBar,
@@ -28,12 +29,14 @@ const Header = () => {
             value={value}
             onChange={(e, val) => setValue(val)}
           >
-            <Tab label="All Blogs" />
-            <Tab label="My Blogs" />
+            <Tab LinkComponent={Link} to="/blogs" label="All Blogs" />
+            <Tab LinkComponent={Link} to="/myBlogs" label="My Blogs" />
           </Tabs>
         </Box>
         <Box display="flex" marginLeft="auto">
           <Button
+            LinkComponent={Link}
+            to="/auth"
             variant="contained"
             sx={{ margin: 1, borderRadius: 10 }}
             color="warning"
@@ -41,6 +44,8 @@ const Header = () => {
             Login
           </Button>
           <Button
+            LinkComponent={Link}
+            to="/auth"
             variant="contained"
             sx={{ margin: 1, borderRadius: 10 }}
             color="warning"
@@ -48,6 +53,8 @@ const Header = () => {
             Signup
           </Button>
           <Button
+            LinkComponent={Link}
+            to="/auth"
             variant="contained"
             sx={{ margin: 1, borderRadius: 10 }}
             color="warning"
