@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   AppBar,
@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 
 const Header = () => {
+  const dispath = useDispatch();
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
   const [value, setValue] = useState();
@@ -65,6 +66,7 @@ const Header = () => {
           )}
           {isLoggedIn && (
             <Button
+              onClick={() => dispath(authActions.logout())}
               LinkComponent={Link}
               to="/auth"
               variant="contained"
