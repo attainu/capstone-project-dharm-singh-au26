@@ -1,9 +1,10 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { authActions } from "../store";
 import { useNavigate } from "react-router-dom";
+import { userAuth } from "../apis";
+
 const Auth = () => {
   const navigate = useNavigate();
   const dispath = useDispatch();
@@ -19,31 +20,21 @@ const Auth = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  const sendRequest = async (type = "login") => {
-    const res = await axios
-      .post(`http://localhost:5000/api/user/${type}`, {
-        name: inputs.name,
-        email: inputs.email,
-        password: inputs.password,
-      })
-      .catch((err) => console.log(err));
-
-    const data = await res.data;
-    return data;
-  };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
     if (isSignup) {
-      sendRequest("signup")
+      userAuth("signup", inputs)
         .then(() => dispath(authActions.login()))
-        .then(() => navigate("/blogs"))
+        .then(() => navigate("/"))
         .then((data) => console.log(data));
     } else {
-      sendRequest()
-        .then(() => dispath(authActions.login()))
-        .then(() => navigate("/blogs"))
-        .then((data) => console.log(data));
+      const isLogin = await userAuth("login", inputs);
+      if (isLogin) {
+        localStorage.setItem("userId", isLogin.user._id);
+        dispath(authActions.login());
+
+        navigate("/blogs");
+      }
     }
   };
   return (

@@ -31,7 +31,7 @@ export const addBlog = async (req, res, next) => {
     title,
     description,
     image,
-    user,
+    user: mongoose.Types.ObjectId(existingUser._id),
   });
   try {
     const session = await mongoose.startSession();

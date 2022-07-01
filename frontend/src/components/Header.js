@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../store";
 
 import {
   AppBar,
@@ -26,7 +27,11 @@ const Header = () => {
       }}
     >
       <Toolbar>
-        <Typography variant="h4">BlogsApp</Typography>
+        <Typography variant="h4">
+          <a href="/" style={{ textDecoration: "none", color: "white" }}>
+            BlogsApp
+          </a>
+        </Typography>
 
         {isLoggedIn && (
           <Box display="flex" marginLeft={"auto"} marginRight={"auto"}>
@@ -74,6 +79,17 @@ const Header = () => {
               color="warning"
             >
               LogOut
+            </Button>
+          )}
+          {isLoggedIn && (
+            <Button
+              LinkComponent={Link}
+              to="/blogs/add"
+              variant="contained"
+              sx={{ margin: 1, borderRadius: 10 }}
+              color="warning"
+            >
+              Add Blog
             </Button>
           )}
         </Box>
